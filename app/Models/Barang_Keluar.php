@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 class Barang_Keluar extends Model
 {
     use HasFactory, Notifiable;
+    protected $table = 'barang_keluars';
     protected $fillable = [
+        'id_barang',
+        'id_user',
         'jumlah_keluar',
         'tanggal_keluar',
     ];

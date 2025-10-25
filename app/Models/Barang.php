@@ -13,6 +13,12 @@ class Barang extends Model
         'kode_barang',
         'nama_barang',
         'stok',
-        'satuan',
+        'satuan_id',
     ];
+
+    public function satuan()
+    {
+        return $this->belongsTo(Satuan::class, 'satuan_id', 'id');
+    }
+
 }

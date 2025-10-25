@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang_Masuk;
+use App\Models\Barang;
+use App\Models\Satuan;
 use Illuminate\Http\Request;
 
 class BarangMasukController extends Controller
@@ -12,8 +14,8 @@ class BarangMasukController extends Controller
      */
     public function index()
     {
-        $barang_masuks = Barang_Masuk::all();
-        return view('barang_masuks.index', compact('barang_masuks'));
+        $barang_masuk = Barang_Masuk::all();
+        return view('admin.barang_masuk.index', compact('barang_masuk'));
     }
 
     /**
@@ -21,7 +23,19 @@ class BarangMasukController extends Controller
      */
     public function create()
     {
-        return view('barang_masuks.create');
+        return view('admin.barang_masuk.create');
+    }
+
+    public function Baru()
+    {
+        $satuans = Satuan::all();
+        return view('admin.barang_masuk.baru', compact('satuans'));
+    }
+
+    public function Lama()
+    {
+        $barang = Barang::all();
+        return view('admin.barang_masuk.lama', compact('barang'));
     }
 
     /**
@@ -36,14 +50,14 @@ class BarangMasukController extends Controller
             'tanggal_masuk' => 'required|date',
         ]);
 
-        $barang_masuks = Barang_Masuk::create([
+        $barang_masuk = Barang_Masuk::create([
             'id_barang' => $validated['id_barang'],
             'id_user' => $validated['id_user'],
             'jumlah_masuk' => $validated['jumlah_masuk'],
             'tanggal_masuk' => $validated['tanggal_masuk'],
         ]);
 
-        return redirect()->route('barang_masuks.index')->with('success', 'Barang Masuk created successfully.');
+        return redirect()->route('barang_masuk.index')->with('success', 'Barang Masuk created successfully.');
     }
 
     /**
@@ -51,7 +65,7 @@ class BarangMasukController extends Controller
      */
     public function show(Barang_Masuk $barang_Masuk)
     {
-        return view('barang_masuks.show', compact('barang_Masuk'));
+        return view('admin.barang_masuk.show', compact('barang_Masuk'));
     }
 
     /**
@@ -59,7 +73,7 @@ class BarangMasukController extends Controller
      */
     public function edit(Barang_Masuk $barang_Masuk)
     {
-        return view('barang_masuks.edit', compact('barang_Masuk'));
+        return view('admin.barang_masuk.edit', compact('barang_Masuk'));
     }
 
     /**
@@ -81,7 +95,7 @@ class BarangMasukController extends Controller
             'tanggal_masuk' => $validated['tanggal_masuk'],
         ]);
 
-        return redirect()->route('barang_masuks.index')->with('success', 'Barang Masuk updated successfully.');
+        return redirect()->route('barang_masuk.index')->with('success', 'Barang Masuk updated successfully.');
     }
 
     /**
@@ -90,6 +104,6 @@ class BarangMasukController extends Controller
     public function destroy(Barang_Masuk $barang_Masuk)
     {
         $barang_Masuk->delete();
-        return redirect()->route('barang_masuks.index')->with('success', 'Barang Masuk deleted successfully.');
+        return redirect()->route('barang_masuk.index')->with('success', 'Barang Masuk deleted successfully.');
     }
 }

@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('barangs', function (Blueprint $table) {
@@ -16,14 +13,12 @@ return new class extends Migration
             $table->string('kode_barang');
             $table->string('nama_barang');
             $table->integer('stok');
-            $table->string('satuan');
+            // sementara belum foreign key, jadi null dulu
+            $table->unsignedBigInteger('satuan_id')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('barangs');

@@ -12,7 +12,9 @@ class BarangKeluarController extends Controller
      */
     public function index()
     {
-        //
+        // Menampilkan daftar barang keluar
+        $barang_keluars = Barang_Keluar::all();
+        return view('barang_keluars.index', compact('barang_keluars'));
     }
 
     /**
@@ -20,7 +22,7 @@ class BarangKeluarController extends Controller
      */
     public function create()
     {
-        //
+        return view('barang_keluars.create');
     }
 
     /**
@@ -28,7 +30,20 @@ class BarangKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_barang' => 'required|exists:barangs,id',
+            'id_user' => 'required|exists:users,id',
+            'jumlah_keluar' => 'required|integer|min:1',
+            'tanggal_keluar' => 'required|date',
+        ]);
+
+        Barang_Keluar::create([
+            'id_barang' => $validatedData['id_barang'],
+            'id_user' => $validatedData['id_user'],
+            'jumlah_keluar' => $validatedData['jumlah_keluar'],
+            'tanggal_keluar' => $validatedData['tanggal_keluar'],
+        ]);  
+        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar created successfully.');
     }
 
     /**
@@ -36,7 +51,7 @@ class BarangKeluarController extends Controller
      */
     public function show(Barang_Keluar $barang_Keluar)
     {
-        //
+        return view('barang_keluars.show', compact('barang_Keluar'));
     }
 
     /**
@@ -44,7 +59,7 @@ class BarangKeluarController extends Controller
      */
     public function edit(Barang_Keluar $barang_Keluar)
     {
-        //
+        return view('barang_keluars.edit', compact('barang_Keluar'));
     }
 
     /**
@@ -52,7 +67,14 @@ class BarangKeluarController extends Controller
      */
     public function update(Request $request, Barang_Keluar $barang_Keluar)
     {
-        //
+        $validatedData = $request->validate([
+            'id_barang' => 'required|exists:barangs,id',
+            'id_user' => 'required|exists:users,id',
+            'jumlah_keluar' => 'required|integer|min:1',
+            'tanggal_keluar' => 'required|date',
+        ]);
+        $barang_Keluar->update($validatedData);
+        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar updated successfully.');
     }
 
     /**
@@ -60,6 +82,7 @@ class BarangKeluarController extends Controller
      */
     public function destroy(Barang_Keluar $barang_Keluar)
     {
-        //
+        $barang_Keluar->delete();
+        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar deleted successfully.');
     }
 }

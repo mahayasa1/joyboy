@@ -3,87 +3,84 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Satuan;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan daftar barang
     public function index()
     {
-        $barangs = Barang::all();
-        return view('barangs.index', compact('barangs'));
+        $barang = Barang::with('satuan')->get();
+        return view('admin.barang.index', compact('barang'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan form tambah barang
     public function create()
     {
-        return view('barangs.create');
+        // Ambil semua data satuan dari tabel satuans
+        $satuans = Satuan::select('id', 'nama_satuan')->get();
+
+        return view('admin.barang.create', compact('satuans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan data barang baru
     public function store(Request $request)
     {
-        $validated = $request->validate9([
-            'kode_barang' => 'required|string|max:50|unique:barangs',
+        $validated = $request->validate([
+            'kode_barang' => 'required|string|max:50|unique:barangs,kode_barang',
             'nama_barang' => 'required|string|max:255',
             'stok' => 'required|integer|min:0',
-            'satuan' => 'required|string|max:100',
+            'satuan_id' => 'required|exists:satuans,id', // validasi untuk foreign key
         ]);
 
-        $barang = Barang::create([
+        Barang::create([
             'kode_barang' => $validated['kode_barang'],
             'nama_barang' => $validated['nama_barang'],
             'stok' => $validated['stok'],
-            'satuan' => $validated['satuan'],
+            'satuan_id' => $validated['satuan_id'], // disesuaikan dengan foreign key di tabel barangs
         ]);
-        return redirect()->route('barangs.index')->with('success', 'Barang created successfully.');
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Menampilkan detail barang (opsional)
     public function show(Barang $barang)
     {
-        return view('barangs.show', compact('barang'));
+        return view('admin.barang.show', compact('barang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Form edit barang
     public function edit(Barang $barang)
     {
-        return view('barangs.edit', compact('barang'));
+        $satuans = Satuan::select('id', 'nama_satuan')->get();
+        return view('barang.edit', compact('barang', 'satuans'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update barang
     public function update(Request $request, Barang $barang)
     {
         $validated = $request->validate([
             'kode_barang' => 'required|string|max:50|unique:barangs,kode_barang,' . $barang->id,
             'nama_barang' => 'required|string|max:255',
             'stok' => 'required|integer|min:0',
-            'satuan' => 'required|string|max:100',
+            'satuan_id' => 'required|exists:satuans,id',
         ]);
 
-        $barang->update($validated);
+        $barang->update([
+            'kode_barang' => $validated['kode_barang'],
+            'nama_barang' => $validated['nama_barang'],
+            'stok' => $validated['stok'],
+            'satuan_id' => $validated['satuan_id'], // disesuaikan dengan foreign key di tabel barangs
+        ]);
 
-        return redirect()->route('barangs.index')->with('success', 'Barang updated successfully.');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Hapus barang
     public function destroy(Barang $barang)
     {
         $barang->delete();
-        return redirect()->route('barangs.index')->with('success', 'Barang deleted successfully.');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
     }
 }

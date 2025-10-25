@@ -10,4 +10,19 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    server: {
+        host: '127.0.0.1',  // Force IPv4
+        port: 5173,
+        cors: {
+            origin: ['http://joyboy.com', 'http://localhost:8000'],
+            credentials: true,
+        },
+        hmr: {
+            host: '127.0.0.1',  // IPv4 for @vite/client
+            port: 5173,
+        },
+    },
+    esbuild: {
+        target: 'es2020',
+    },
 });
