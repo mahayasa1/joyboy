@@ -2,87 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Barang_Keluar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BarangKeluarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan daftar barang keluar
     public function index()
     {
-        // Menampilkan daftar barang keluar
-        $barang_keluars = Barang_Keluar::all();
-        return view('barang_keluars.index', compact('barang_keluars'));
+        $barang_keluar = Barang_Keluar::with('barang', 'user')->latest()->get();
+        return view('admin.barang_keluar.index', compact('barang_keluar'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan form tambah barang keluar
     public function create()
     {
-        return view('barang_keluars.create');
+        $barang = Barang::with('satuan')->get();
+        return view('admin.barang_keluar.create', compact('barang'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan data barang keluar + kurangi stok
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'id_barang' => 'required|exists:barangs,id',
-            'id_user' => 'required|exists:users,id',
             'jumlah_keluar' => 'required|integer|min:1',
             'tanggal_keluar' => 'required|date',
         ]);
 
+        $barang = Barang::findOrFail($request->id_barang);
+
+        // Cek apakah stok mencukupi
+        if ($barang->stok < $request->jumlah_keluar) {
+            return back()->with('error', 'Stok barang tidak mencukupi!')->withInput();
+        }
+
+        // Kurangi stok barang
+        $barang->stok -= $request->jumlah_keluar;
+        $barang->save();
+
+        // Simpan data barang keluar
         Barang_Keluar::create([
-            'id_barang' => $validatedData['id_barang'],
-            'id_user' => $validatedData['id_user'],
-            'jumlah_keluar' => $validatedData['jumlah_keluar'],
-            'tanggal_keluar' => $validatedData['tanggal_keluar'],
-        ]);  
-        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Barang_Keluar $barang_Keluar)
-    {
-        return view('barang_keluars.show', compact('barang_Keluar'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Barang_Keluar $barang_Keluar)
-    {
-        return view('barang_keluars.edit', compact('barang_Keluar'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Barang_Keluar $barang_Keluar)
-    {
-        $validatedData = $request->validate([
-            'id_barang' => 'required|exists:barangs,id',
-            'id_user' => 'required|exists:users,id',
-            'jumlah_keluar' => 'required|integer|min:1',
-            'tanggal_keluar' => 'required|date',
+            'id_barang' => $barang->id,
+            'id_user' => Auth::id(),
+            'jumlah_keluar' => $request->jumlah_keluar,
+            'tanggal_keluar' => $request->tanggal_keluar,
         ]);
-        $barang_Keluar->update($validatedData);
-        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar updated successfully.');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Barang_Keluar $barang_Keluar)
-    {
-        $barang_Keluar->delete();
-        return redirect()->route('barang_keluars.index')->with('success', 'Barang Keluar deleted successfully.');
+        return redirect()->route('barang.index')->with('success', 'Data barang keluar berhasil disimpan dan stok dikurangi!');
     }
 }

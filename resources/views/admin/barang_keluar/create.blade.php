@@ -2,9 +2,15 @@
 
 @section('content')
 <div class="bg-white shadow rounded-lg p-6 max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold text-gray-700 mb-6">Entri Barang Lama</h2>
+    <h2 class="text-2xl font-bold text-gray-700 mb-6">Entri Barang Keluar</h2>
 
-    <form action="{{ route('barang_masuk.store') }}" method="POST">
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <form action="{{ route('barang_keluar.store') }}" method="POST">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
@@ -17,7 +23,7 @@
                         <option value="{{ $item->id }}" 
                             data-kode="{{ $item->kode_barang }}"
                             data-stok="{{ $item->stok }}"
-                            data-satuan="{{ $item->satuan->nama_satuan ?? '-' }}">
+                            data-satuan="{{ $item->satuan ? $item->satuan->nama_satuan : '-' }}">
                             {{ $item->nama_barang }}
                         </option>
                     @endforeach
@@ -30,29 +36,30 @@
                 <input readonly type="text" id="kodeBarang" class="w-full border rounded px-3 py-2 bg-gray-100">
             </div>
 
-            {{-- Stok Sebelumnya --}}
+            {{-- Stok Sekarang --}}
             <div>
-                <label class="block text-gray-700">Stok Sebelumnya</label>
-                <input readonly type="number" id="stokSebelumnya" class="w-full border rounded px-3 py-2 bg-gray-100" placeholder="0">
+                <label class="block text-gray-700">Stok Sekarang</label>
+                <input readonly type="number" id="stokSekarang" class="w-full border rounded px-3 py-2 bg-gray-100" placeholder="0">
             </div>
 
-            {{-- Jumlah Masuk --}}
+            {{-- Jumlah Keluar --}}
             <div>
-                <label class="block text-gray-700">Jumlah Masuk*</label>
-                <input type="number" name="jumlah_masuk" class="w-full border rounded px-3 py-2" placeholder="0" required>
+                <label class="block text-gray-700">Jumlah Keluar*</label>
+                <input type="number" name="jumlah_keluar" class="w-full border rounded px-3 py-2" placeholder="0" required>
             </div>
 
-            {{-- Tanggal Masuk --}}
-            <div>
-                <label class="block text-gray-700">Tanggal*</label>
-                <input type="date" name="tanggal_masuk" class="w-full border rounded px-3 py-2" required>
-            </div>
-
-            {{-- Satuan (readonly) --}}
+            {{-- Satuan --}}
             <div>
                 <label class="block text-gray-700">Satuan</label>
-                <input readonly type="text" id="satuanBarang" class="w-full border rounded px-3 py-2 bg-gray-100" placeholder="-">
+                <input readonly type="text" id="satuanBarang" class="w-full border rounded px-3 py-2 bg-gray-100">
             </div>
+
+            {{-- Tanggal Keluar --}}
+            <div>
+                <label class="block text-gray-700">Tanggal*</label>
+                <input type="date" name="tanggal_keluar" class="w-full border rounded px-3 py-2" required>
+            </div>
+
         </div>
 
         <div class="flex gap-3 mt-6">
@@ -66,8 +73,8 @@
 <script>
     const select = document.getElementById('barangSelect');
     const kodeBarangInput = document.getElementById('kodeBarang');
-    const stokSebelumnyaInput = document.getElementById('stokSebelumnya');
-    const satuanInput = document.getElementById('satuanBarang');
+    const stokSekarangInput = document.getElementById('stokSekarang');
+    const satuanBarangInput = document.getElementById('satuanBarang');
 
     select.addEventListener('change', function() {
         const selected = this.options[this.selectedIndex];
@@ -76,8 +83,8 @@
         const satuan = selected.getAttribute('data-satuan');
 
         kodeBarangInput.value = kode || '';
-        stokSebelumnyaInput.value = stok || 0;
-        satuanInput.value = satuan || '-';
+        stokSekarangInput.value = stok || 0;
+        satuanBarangInput.value = satuan || '';
     });
 </script>
 @endsection

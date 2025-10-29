@@ -47,8 +47,33 @@
                 </ul>
             </li>
             <li><a href="{{ route('barang.create') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-sign-in-alt"></i><span>Barang Masuk</span></a></li>
-            <li><a href="{{ route('barang_keluar.index') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-sign-out-alt"></i><span>Barang Keluar</span></a></li>
-            <li><a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-chart-line"></i><span>Laporan</span></a></li>
+            <li><a href="{{ route('barang_keluar.create') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-sign-out-alt"></i><span>Barang Keluar</span></a></li>
+            <li x-data="{ open: false }">
+                <button @click="open = !open" class="flex items-center justify-between w-full px-3 py-2 hover:bg-yellow-500 rounded">
+                    <div class="flex items-center gap-2">
+                        <i class="fa fa-chart-line"></i><span>Laporan</span>
+                    </div>
+                    <i :class="open ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+                </button>
+            
+                <ul x-show="open" x-transition class="mt-1 ml-6 space-y-1">
+                    <li>
+                        <a href="{{ route('laporan_stok') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
+                            <i class="fa fa-box"></i><span>Laporan Stok</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
+                            <i class="fa fa-sign-in-alt"></i><span>Laporan Barang Masuk</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
+                            <i class="fa fa-sign-out-alt"></i><span>Laporan Barang Keluar</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li><a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-user-cog"></i><span>Manajemen User</span></a></li>
             <li><a href="{{ route('logout') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-sign-out-alt"></i><span>Logout</span></a></li>
         </ul>
@@ -69,4 +94,3 @@
     @vite(['resources/js/app.js'])
 </body>
 </html>
-

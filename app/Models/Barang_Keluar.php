@@ -16,4 +16,14 @@ class Barang_Keluar extends Model
         'jumlah_keluar',
         'tanggal_keluar',
     ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'id_barang', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
 }
