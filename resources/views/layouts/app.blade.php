@@ -63,18 +63,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
+                        <a href="{{ route('laporan_barang_masuk') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
                             <i class="fa fa-sign-in-alt"></i><span>Laporan Barang Masuk</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
+                        <a href="{{ route('laporan_barang_keluar') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-400 rounded">
                             <i class="fa fa-sign-out-alt"></i><span>Laporan Barang Keluar</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li><a href="#" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-user-cog"></i><span>Manajemen User</span></a></li>
+            <li><a href="{{ route('user.index') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-user-cog"></i><span>Manajemen User</span></a></li>
             <li><a href="{{ route('logout') }}" class="flex items-center gap-2 px-3 py-2 hover:bg-yellow-500 rounded"><i class="fa fa-sign-out-alt"></i><span>Logout</span></a></li>
         </ul>
     </div>

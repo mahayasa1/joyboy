@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'username' => 'dwika',
         'nama_lengkap' => 'dwika',
         'password' => Hash::make('12345678'), // gunakan Hash agar password aman
+        'role' => 'admin',
         'created_at' => now(),
         'updated_at' => now(),
         ]);

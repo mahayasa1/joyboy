@@ -38,6 +38,13 @@
             <div class="mb-4">
                 <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-400" required>
             </div>
+            <div class="mb-4">
+                <select name="role" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-400" required>
+                    <option value="">Pilih Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
             <button type="submit" class="w-full bg-yellow-400 text-white font-bold py-2 rounded-lg hover:bg-yellow-500 transition">REGISTER</button>
         </form>
         <div class="text-center mt-4 text-gray-700">

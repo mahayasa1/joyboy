@@ -8,86 +8,73 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Tampilkan semua user
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $users = User::orderBy('id')->get();
+        return view('admin.user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Form tambah user
     public function create()
     {
-        return view('users.create');
+        return view('admin.user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Simpan user baru
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+        $request->validate([
+            'username' => 'required|unique:users,username',
+            'nama_lengkap' => 'required',
+            'password' => 'required|min:6',
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+        User::create([
+            'username' => $request->username,
+            'nama_lengkap' => $request->nama_lengkap,
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
+    // Form edit user
+    public function edit($id)
     {
-        return view('users.show', compact('user'));
+        $user = User::findOrFail($id);
+        return view('admin.user.edit', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
+    // Update user
+    public function update(Request $request, $id)
     {
-        return view('users.edit', compact('user'));
-    }
+        $user = User::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+        $request->validate([
+            'username' => 'required|unique:users,username,' . $user->id,
+            'nama_lengkap' => 'required',
+            'password' => 'nullable|min:6',
         ]);
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
+        $data = [
+            'username' => $request->username,
+            'nama_lengkap' => $request->nama_lengkap,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
         }
-        $user->save();
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        $user->update($data);
+
+        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
+    // Hapus user
+    public function destroy($id)
     {
-        $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        User::findOrFail($id)->delete();
+        return redirect()->route('user.index')->with('success', 'User berhasil dihapus!');
     }
 }
