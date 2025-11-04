@@ -24,13 +24,13 @@ class LaporanBarangKeluarController extends Controller
     // }
 
     // ✅ Export ke PDF
-    public function exportPdf()
-    {
-        $laporan = Barang_Keluar::with('barang.satuan')->orderBy('tanggal_keluar', 'desc')->get();
+    // public function exportPdf()
+    // {
+    //     $laporan = Barang_Keluar::with('barang.satuan')->orderBy('tanggal_keluar', 'desc')->get();
 
-        $pdf = Pdf::loadView('admin.laporan.laporan_barang_keluar_pdf', compact('laporan'))
-            ->setPaper('a4', 'landscape');
+    //     $pdf = Pdf::loadView('admin.laporan.laporan_barang_keluar_pdf', compact('laporan'))
+    //         ->setPaper('a4', 'landscape');
 
-        return $pdf->download('laporan_barang_keluar.pdf');
-    }
+    //     return $pdf->download('laporan_barang_keluar.pdf');
+    // }
 }

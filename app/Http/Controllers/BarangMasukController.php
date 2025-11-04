@@ -27,10 +27,10 @@ class BarangMasukController extends Controller
 
         // 🔹 Generate kode barang otomatis (A001, A002, dst)
         $latestBarang = Barang::latest('id')->first();
-        $nextKode = 'A001';
+        $nextKode = 'JB001';
         if ($latestBarang) {
             $lastNumber = (int) substr($latestBarang->kode_barang, offset: 3);
-            $nextKode = 'A' . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+            $nextKode = 'JB' . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
         }
 
         return view('admin.barang_masuk.baru', compact('satuans', 'nextKode'));
