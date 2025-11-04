@@ -34,7 +34,10 @@ class LaporanStokController extends Controller
 
         return view('admin.laporan.laporan_stok', compact('laporan'));
     }
-
+   public function exportExcel()
+    {
+        return Excel::download(new LaporanStokExport, 'laporan_stok.xlsx');
+    }
     // ✅ Export ke PDF
     public function exportPdf()
     {

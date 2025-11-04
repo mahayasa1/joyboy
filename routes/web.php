@@ -69,17 +69,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('satuan', SatuanController::class);
 
     Route::get('/laporan/laporan-stok', [LaporanStokController::class, 'index'])->name('laporan_stok');
-    Route::get('/laporan/laporan-stok/export-excel', [LaporanStokController::class, 'exportExcel'])->name('laporan_stok.exportExcel');
-    Route::get('/laporan/laporan-stok/export-pdf', [LaporanStokController::class, 'exportPdf'])->name('laporan_stok.exportPdf');
+    Route::get('/laporan/laporan-stok/export/excel', [LaporanStokController::class, 'exportExcel'])->name('laporan_stok.exportExcel');
+    Route::get('/laporan/laporan-stok/export/pdf', [LaporanStokController::class, 'exportPdf'])->name('laporan_stok.exportPdf');
 
         // Laporan Barang Masuk
     Route::get('/laporan/laporan-barang-masuk', [LaporanBarangMasukController::class, 'index'])->name('laporan_barang_masuk');
-    Route::get('/laporan/laporan-barang-masuk/export-excel', [LaporanBarangMasukController::class, 'exportExcel'])->name('laporan_barang_masuk.exportExcel');
-    Route::get('/laporan/laporan-barang-masuk/export-pdf', [LaporanBarangMasukController::class, 'exportPdf'])->name('laporan_barang_masuk.exportPdf');
+    Route::get('/laporan/laporan-barang-masuk/export/excel', [LaporanBarangMasukController::class, 'exportExcel'])->name('laporan_barang_masuk.exportExcel');
+    Route::get('/laporan/laporan-barang-masuk/export/pdf', [LaporanBarangMasukController::class, 'exportPdf'])->name('laporan_barang_masuk.exportPdf');
 
     // Laporan Barang Keluar
     Route::get('/laporan/laporan-barang-keluar', [LaporanBarangKeluarController::class, 'index'])->name('laporan_barang_keluar');
-    Route::get('/laporan/laporan-barang-keluar/export-excel', [LaporanBarangKeluarController::class, 'exportExcel'])->name('laporan_barang_keluar.exportExcel');
-    Route::get('/laporan/laporan-barang-keluar/export-pdf', [LaporanBarangKeluarController::class, 'exportPdf'])->name('laporan_barang_keluar.exportPdf');
+    Route::get('/laporan/laporan-barang-keluar/export/excel', [LaporanBarangKeluarController::class, 'exportExcel'])->name('laporan_barang_keluar.exportExcel');
+    Route::get('/laporan/laporan-barang-keluar/export/pdf', [LaporanBarangKeluarController::class, 'exportPdf'])->name('laporan_barang_keluar.exportPdf');
 
 });

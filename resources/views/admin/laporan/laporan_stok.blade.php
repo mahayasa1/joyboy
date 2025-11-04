@@ -6,12 +6,12 @@
         <h2 class="text-2xl font-bold text-gray-700">Laporan Stok Barang</h2>
 
         <div class="flex gap-2">
-            <a href="#"
+            <a href="{{ route('laporan-stok.exportExcel') }}"
                 class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow">
                 <i class="fa fa-file-excel mr-2"></i> Export Excel
             </a>
 
-            <a href="#"
+            <a href="{{ route('laporan-stok.exportPdf') }}"
                 class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow">
                 <i class="fa fa-file-pdf mr-2"></i> Cetak PDF
             </a>
