@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Barang Masuk')
+@section('page_title','Barang Masuk')
+
 @section('content')
 <div class="flex flex-col items-center justify-center mt-10">
     <h2 class="text-3xl font-bold text-gray-700 mb-6">Pilih Jenis Barang Masuk</h2>

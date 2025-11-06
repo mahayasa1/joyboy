@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'User')
+@section('page_title','User')
+
 @section('content')
 <div class="p-6 bg-white shadow rounded">
     <div class="flex justify-between items-center mb-4">

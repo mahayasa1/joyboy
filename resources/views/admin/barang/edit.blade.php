@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Barang')
+@section('page_title','Barang')
+
 @section('content')
 <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md mt-10">
     <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Edit Barang</h2>

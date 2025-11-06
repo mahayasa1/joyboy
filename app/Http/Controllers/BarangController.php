@@ -54,7 +54,7 @@ class BarangController extends Controller
     public function edit(Barang $barang)
     {
         $satuans = Satuan::select('id', 'nama_satuan')->get();
-        return view('barang.edit', compact('barang', 'satuans'));
+        return view('admin.barang.edit', compact('barang', 'satuans'));
     }
 
     // Update barang

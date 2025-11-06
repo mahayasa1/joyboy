@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Barang Keluar')
+@section('page_title','Barang Keluar')
+
 @section('content')
 <div class="bg-white shadow rounded-lg p-6 max-w-3xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-700 mb-6">Entri Barang Keluar</h2>

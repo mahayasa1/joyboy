@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@section('title', ' Satuan')
+@section('page_title',' Satuan')
+
+@section('breadcrumb')
+<span class="text-white font-semibold">Satuan</span>
+@endsection
+
 @section('content')
 <div class="flex justify-between items-center mb-4">
     <h2 class="text-2xl font-bold text-gray-700">Data Satuan</h2>

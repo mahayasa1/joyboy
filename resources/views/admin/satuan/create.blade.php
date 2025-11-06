@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('title', 'Tambah Satuan')
+@section('page_title','Satuan')
+
+@section('breadcrumb')
+<a href="{{ route('satuan.index') }}" class="hover:underline">Data Satuan</a>
+<span class="mx-2">›</span>
+<span class="text-white font-semibold">Tambah Satuan</span>
+@endsection
+
 @section('content')
 <h2 class="text-2xl font-bold mb-4">Tambah Satuan</h2>
 

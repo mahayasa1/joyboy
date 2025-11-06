@@ -35,9 +35,9 @@
             </div>
             <button type="submit" class="w-full bg-yellow-400 text-white font-bold py-2 rounded-lg hover:bg-yellow-500 transition">LOGIN</button>
         </form>
-        <div class="text-center mt-4 text-gray-700">
+        {{-- <div class="text-center mt-4 text-gray-700">
             Belum punya akun? <a href="{{ route('register') }}" class="text-yellow-500 font-bold">Register</a>
-        </div>
+        </div> --}}
     </div>
 </body>
 </html>
